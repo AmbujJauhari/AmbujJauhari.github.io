@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Near real time monitoring with spring boot, influxdb and grafana"
+title: "Near real time monitoring with spring boot, influxdb and grafana {Under DEV}"
 date: 2017-04-25
 ---
 
@@ -45,6 +45,9 @@ Fields are not indexed so any queries done with fields will scan through the tab
 Tables in infulxdb are called as measurement. A single measurement can belong to different retention policies. A retention policy describes how long InfluxDB keeps data (DURATION) and how many copies of those data are stored in the cluster (REPLICATION). InfluxDB automatically creates the autogen retention policy which has an infinite duration and replication factor is set to 1
 
 Further details can be found influx DB's [official documents]
+
+## Quick note on Grafana ##
+Grafana is an open source metric analytics & visualization suite. It is most commonly used for visualizing time series data for infrastructure and application analytics
 
 [official website]:http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-endpoints
 [official documents]:https://docs.influxdata.com/influxdb/v1.2/
