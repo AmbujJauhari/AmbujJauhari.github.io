@@ -49,7 +49,124 @@ Further details can be found influx DB's [official documents]
 ## Quick note on Grafana ##
 Grafana is an open source metric analytics & visualization suite. It is most commonly used for visualizing time series data for infrastructure and application analytics
 
+More on grafana [here]
+
 [official website]:http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-endpoints
 [official documents]:https://docs.influxdata.com/influxdb/v1.2/
+[here]:http://docs.grafana.org/
+
+##Project setup##
+
+We will setup a small spring boot application with a simple HelloWorld controller. 
+
+First lets create a simple configuration properties file
+
+```
+@ConfigurationProperties(prefix = "service", ignoreUnknownFields = false)
+public class HelloWorldProperties {
 
 
+    private String name = "World";
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+}
+```
+
+@ConfigurationProperties is a very neat way to inject properties in an application. All you need to do is add a simple property in application.properties service.name and instead of 'World', your value from application.properties will be injected.
+
+Now lets create a controller
+
+```
+@Controller
+@Description("A controller for handling requests for hello messages")
+public class HelloController {
+
+    private final HelloWorldProperties helloWorldProperties;
+
+    public HelloController(HelloWorldProperties helloWorldProperties) {
+        this.helloWorldProperties = helloWorldProperties;
+    }
+
+    @GetMapping("/")
+    @ResponseBody
+    public Map<String, String> hello() {
+        return Collections.singletonMap("message",
+                "Hello " + this.helloWorldProperties.getName());
+    }
+}
+```
+
+It a simple controller, which defaults to "Hello world".
+
+
+Next we will create InfluxDBWriter which will actually responsible for putting data in InfluxDB
+
+```
+public class InfluxDBGaugeWriter implements GaugeWriter {
+
+    InfluxDB influxDB;
+
+    String dbName;
+    BatchPoints batchPoints;
+
+    public InfluxDBGaugeWriter() {
+        influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root");
+        dbName = "metricDB";
+        batchPoints = BatchPoints
+                .database(dbName)
+                .tag("async", "true")
+                .retentionPolicy("autogen")
+                .consistency(InfluxDB.ConsistencyLevel.ALL)
+                .build();
+    }
+
+    @Override
+    public void set(Metric<?> metric) {
+
+        Point point = Point.measurement("heap").time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
+                .addField(metric.getName(), metric.getValue()).build();
+
+
+        batchPoints.point(point);
+        influxDB.write(batchPoints);
+    }
+}
+```
+
+spring boot provides MetricWriter interface or GaugeWriter for simple use cases. We have used GaugeWriter and overriden the set method.
+In the constructor we are just establishing the connection with InfluxDB and created a batchPoints, in the set method we are creating a point and adding to the batchpoints and writing to influxdb. 
+
+Please note that we can do all sorts of optimization here which involves batching and buffered flushing of data. This is just for learning purpose.
+
+Now we will create the application's main class
+
+```
+@SpringBootApplication
+@EnableConfigurationProperties(HelloWorldProperties.class)
+public class Application {
+
+    @Bean
+    @ExportMetricWriter
+    public GaugeWriter fileGaugeWriter() {
+        InfluxDBGaugeWriter writer = new InfluxDBGaugeWriter();
+        return writer;
+    }
+
+    @Bean
+    public MetricsEndpointMetricReader metricsEndpointMetricReader(MetricsEndpoint metricsEndpoint) {
+        return new MetricsEndpointMetricReader(metricsEndpoint);
+    }
+
+    public static void main(String... args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+```
