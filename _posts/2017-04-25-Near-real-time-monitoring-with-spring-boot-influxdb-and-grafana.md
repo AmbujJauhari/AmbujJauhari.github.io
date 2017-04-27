@@ -68,6 +68,8 @@ Double click influxdb.exe to start the influxdb server by default it run on port
 
 We have created a database SampleAppMetric and we will be using thie database
 
+### Spring boot application setup ###
+
 We will setup a small spring boot application with a simple HelloWorld controller. 
 First lets create a simple configuration properties file
 
