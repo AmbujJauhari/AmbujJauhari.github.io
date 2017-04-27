@@ -237,3 +237,19 @@ Now once you can see the application lets go and check the management port url [
 [http://localhost:8081/metrics]:http://localhost:8081/metrics
 
 Now once we have confirmed that our application is working and our metrics can be seen, lets take a look at the influxdb 
+
+
+Lets first take a look at all the measurements created
+![](../_images/measurements.JPG?raw=true)
+
+you can see that we have all the measurements and each measurement is nothing just the name of each metric
+
+Now lets view some of the measurements like uptime and heap
+![](../_images/selectquery.JPG?raw=true)
+
+Since there were too many records, i have limited the no. of rows to 5.
+
+So significance of the above data can be interpreted as at a particular given time what is the heap size of SampleApp.
+
+All this is good and fine, we have the application metrics data stored in a db but now lets see how we can visualize the data in grafana
+
