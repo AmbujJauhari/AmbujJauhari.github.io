@@ -131,7 +131,7 @@ public class InfluxDBGaugeWriter implements GaugeWriter {
 
     public InfluxDBGaugeWriter() {
         influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root");
-        dbName = "metricDB";
+        dbName = "sampleAppMetric";
         batchPoints = BatchPoints
                 .database(dbName)
                 .tag("async", "true")
@@ -143,7 +143,7 @@ public class InfluxDBGaugeWriter implements GaugeWriter {
     @Override
     public void set(Metric<?> metric) {
 
-        Point point = Point.measurement("heap").time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
+        Point point = Point.measurement("FeederMetric").time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
                 .addField(metric.getName(), metric.getValue()).build();
 
 
