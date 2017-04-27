@@ -320,3 +320,7 @@ Now lets see how our complete dashboard looks like
 
 ![](../_images/CompleteDashboard.JPG?raw=true)
 
+
+This is a just a small post on how we can integrate spring-boot, influxdb and grafana for new real time monitoring. Hope this blog has been useful. You can find the source code at [git repo]
+
+[git repo]:https://github.com/AmbujJauhari/spring-boot-influx-grafana
