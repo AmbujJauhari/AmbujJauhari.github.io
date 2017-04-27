@@ -161,6 +161,8 @@ public class InfluxDBGaugeWriter implements GaugeWriter {
 spring boot provides MetricWriter interface or GaugeWriter for simple use cases. We have used GaugeWriter and overriden the set method.
 In the constructor we are just establishing the connection with InfluxDB and created a batchPoints, in the set method we are creating a point and adding to the batchpoints and writing to influxdb when the batch breaches the threshold limit. 
 
+If you see the set method here, you can see that we have not defined how our measurement or table will look like i.e we have not defined any particular schema, it is created dynamically and hence influxdb offers a schema less protocol.
+
 Please note that we can do all other sorts of optimization here which involves batching and buffered flushing of data. This is just for learning purpose.
 
 Now we will create the application's main class
@@ -233,3 +235,5 @@ Now once you can see the application lets go and check the management port url [
 
 [http://localhost:8090]:http://localhost:8090
 [http://localhost:8081/metrics]:http://localhost:8081/metrics
+
+Now once we have confirmed that our application is working and our metrics can be seen, lets take a look at the influxdb 
