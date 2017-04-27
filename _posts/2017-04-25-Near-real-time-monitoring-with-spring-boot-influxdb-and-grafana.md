@@ -225,5 +225,11 @@ You see we have defined service.name which will be injected the HelloWorldProper
 Now lets deploy your spring boot application, like any other application. Since i have the project setup in IDE, i will just run my main class. Once your application is up 
 
 Lets browse to the application url first [http://localhost:8090]
+![](../_images/applicationurl.JPG?raw=true)
+
 
 Now once you can see the application lets go and check the management port url [http://localhost:8081/metrics]
+![](../_images/metricurl.JPG?raw=true)
+
+[http://localhost:8090]:http://localhost:8090
+[http://localhost:8081/metrics]:http://localhost:8081/metrics
