@@ -280,3 +280,19 @@ Lets fill in the details now
 ![](../_images/grafandatasourcedetails.JPG?raw=true)
 
 Once that is done you can click Add and then save & Test to test the connection, it should be all success
+
+Now lets create a new dashboard
+![](../_images/grafananewdashboard.JPG?raw=true)
+
+
+Grafana allows you to create multiple rows, and each row can have multiple panels
+
+We will be displaying heap, uptime and our custom metrics that we have created custom.metrics.value 
+
+we will disply heap and uptime in one row in separate panels and custome metrics in a separate row
+
+So lets start with heap in panel-1, we will be choosing graph as our visualizer for heap
+Once you click on graph it will create a blank panel, we will edit this panel now.
+![](../_images/grafanapaneledit.JPG?raw=true)
+
+ 
