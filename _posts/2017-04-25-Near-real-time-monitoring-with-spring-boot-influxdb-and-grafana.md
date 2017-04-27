@@ -296,3 +296,13 @@ Once you click on graph it will create a blank panel, we will edit this panel no
 ![](../_images/grafanapaneledit.JPG?raw=true)
 
  
+Let modify the panel settings by changing the datasource and naming the fields and measurements
+![](../_images/grafanaheapusedpanelJPG.JPG?raw=true)
+
+Click on save button on the top now
+![](../_images/SampleAppDashboard.JPG?raw=true)
+
+
+Similarly lets add the panel for uptime in the same row, for that we will have to reduce the size of heapused panel 
+![](../_images/reduceheapusedpanel.JPG?raw=true)
+
