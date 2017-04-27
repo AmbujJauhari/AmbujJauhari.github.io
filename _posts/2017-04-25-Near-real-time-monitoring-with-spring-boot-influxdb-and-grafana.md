@@ -58,7 +58,7 @@ More on grafana [here]
 ##Project setup##
 
 Lets first bring up influxdb on my local machine. We are using version v1.2.2
-![Alt text](/../_images/influxdb.JPG?raw=true "Optional Title")
+![Alt text](../_images/influxdb.JPG?raw=true "Optional Title")
 
 We will setup a small spring boot application with a simple HelloWorld controller. 
 
