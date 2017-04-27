@@ -334,7 +334,7 @@ Now similar to what we have done for heapused, we do it for uptime and save the 
 
 Now lets see how our complete dashboard looks like
 
-![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/CompleteDashboard.JP)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/CompleteDashboard.JPG)
 
 
 This is a just a small post on how we can integrate spring-boot, influxdb and grafana for new real time monitoring. Hope this blog has been useful. You can find the source code at [git repo]
