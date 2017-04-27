@@ -42,7 +42,7 @@ Above table shows the data from a sample table in influxdb. Every table in the i
 
 Fields are not indexed so any queries done with fields will scan through the table. Indexed columns in influxdb are called tags, they are not compulsary but should be used for querying.
 
-Tables in infulxdb are called as measurement. A single measurement can belong to different retention policies. A retention policy describes how long InfluxDB keeps data (DURATION) and how many copies of those data are stored in the cluster (REPLICATION). InfluxDB automatically creates the autogen retention policy which has an infinite duration and replication factor is set to 1
+Tables in influxdb are called as measurement. A single measurement can belong to different retention policies. A retention policy describes how long InfluxDB keeps data (DURATION) and how many copies of those data are stored in the cluster (REPLICATION). InfluxDB automatically creates the autogen retention policy which has an infinite duration and replication factor is set to 1
 
 Further details can be found influx DB's [official documents]
 
@@ -59,6 +59,7 @@ More on grafana [here]
 ## Project setup ##
 
 ### Setting up influx db ###
+
 Lets first bring up influxdb on my local machine. We are using version v1.2.2
 ![](../_images/influxdb.JPG?raw=true)
 
@@ -66,7 +67,7 @@ Double click influxdb.exe to start the influxdb server by default it run on port
 
 ![](../_images/creating_db.JPG?raw=true)
 
-We have created a database SampleAppMetric and we will be using thie database
+We have created a database SampleAppMetric and we will be using this database
 
 ### Spring boot application setup ###
 
@@ -143,9 +144,8 @@ public class InfluxDBGaugeWriter implements GaugeWriter {
 
     @Override
     public void set(Metric<?> metric) {
-
-        Point point = Point.measurement(metric.getName()).time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
-                .addField("value", metric.getValue()).build();
+        Point point = Point.measurement(MetricNameMapping.valueOf(metric.getName())).time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
+                .addField("metricvalue", metric.getValue()).build();
 
 
         batchPoints.point(point);
@@ -162,6 +162,9 @@ spring boot provides MetricWriter interface or GaugeWriter for simple use cases.
 In the constructor we are just establishing the connection with InfluxDB and created a batchPoints, in the set method we are creating a point and adding to the batchpoints and writing to influxdb when the batch breaches the threshold limit. 
 
 If you see the set method here, you can see that we have not defined how our measurement or table will look like i.e we have not defined any particular schema, it is created dynamically and hence influxdb offers a schema less protocol.
+
+It seems that grafana is not able to read measurements if it has '.' in its name so i have created a class MetricNameMapping whose valueOf function will replace the '.' from the metric's name.
+
 
 Please note that we can do all other sorts of optimization here which involves batching and buffered flushing of data. This is just for learning purpose.
 
@@ -210,7 +213,9 @@ public class ScheduledMetricsExample {
 }
 ```
 
-So we have created a service class ScheduledMetricsExample and declared a field of type CounterService which is instantiated by spring using the constructor. Spring provides 2 classes CounterService and GaugeService. The CounterService exposes increment, decrement and reset methods; the GaugeService provides a submit method. We are using a counterservice here for incrementing custom.metrics.value every 1min.
+So we have created a service class ScheduledMetricsExample and declared a field of type CounterService which is instantiated by spring using the constructor. Spring provides 2 classes CounterService and GaugeService. The CounterService exposes increment, decrement and reset methods; the GaugeService provides a submit method.
+
+We are using a counterservice here for incrementing custom.metrics.value every 1min.
 
 
 Now lets create the application.properties file in resources which wil define the portno. for our application and the management port for our application.
@@ -266,44 +271,55 @@ let bring up grafan using grafan-server.exe and lets access [http://localhost:80
 ![](../_images/grafanahomepage.JPG?raw=true)
 
 admin use for grafana is admin and password is admin as well, So lets login now
+
 ![](../_images/grafanahomedashboard.JPG?raw=true)
 
 Now before we can do anything, we need to setup influxdb datasource first
+
 ![](../_images/grafanahomedashboarddatasource.JPG?raw=true)
 
 ![](../_images/grafanadatasource.JPG?raw=true)
 
+
 Click on Add Data Source to add a new data source
+
 ![](../_images/grafanaadddatasource.JPG?raw=true)
 
 Lets fill in the details now
+
 ![](../_images/grafandatasourcedetails.JPG?raw=true)
 
 Once that is done you can click Add and then save & Test to test the connection, it should be all success
 
 Now lets create a new dashboard
+
 ![](../_images/grafananewdashboard.JPG?raw=true)
 
 
 Grafana allows you to create multiple rows, and each row can have multiple panels
 
-We will be displaying heap, uptime and our custom metrics that we have created custom.metrics.value 
+We will be displaying heapused, uptime and our custom metrics that we have created custom.metrics.value 
 
 we will disply heap and uptime in one row in separate panels and custome metrics in a separate row
 
 So lets start with heap in panel-1, we will be choosing graph as our visualizer for heap
+
 Once you click on graph it will create a blank panel, we will edit this panel now.
+
 ![](../_images/grafanapaneledit.JPG?raw=true)
 
  
 Let modify the panel settings by changing the datasource and naming the fields and measurements
+
 ![](../_images/grafanaheapusedpanelJPG.JPG?raw=true)
 
 Click on save button on the top now
+
 ![](../_images/SampleAppDashboard.JPG?raw=true)
 
 
 Similarly lets add the panel for uptime in the same row, for that we will have to reduce the size of heapused panel 
+
 ![](../_images/reduceheapusedpanel.JPG?raw=true)
 
 Now click on left side corner a popup will open there click on add panel
