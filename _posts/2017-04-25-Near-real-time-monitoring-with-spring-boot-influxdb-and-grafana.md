@@ -46,6 +46,7 @@ Tables in infulxdb are called as measurement. A single measurement can belong to
 
 Further details can be found influx DB's [official documents]
 
+
 ## Quick note on Grafana ##
 Grafana is an open source metric analytics & visualization suite. It is most commonly used for visualizing time series data for infrastructure and application analytics
 
@@ -58,7 +59,11 @@ More on grafana [here]
 ##Project setup##
 
 Lets first bring up influxdb on my local machine. We are using version v1.2.2
-![Alt text](../_images/influxdb.JPG?raw=true "Optional Title")
+![](../_images/influxdb.JPG?raw=true "Optional Title")
+
+Double click influxdb.exe to start the influxdb server by default it run on port 8086, but it can be configured using file influxdb.conf. Click on influx.exe to start a CLI interface. Now lets create a database first.
+
+
 
 We will setup a small spring boot application with a simple HelloWorld controller. 
 
