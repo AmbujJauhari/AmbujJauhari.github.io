@@ -124,6 +124,7 @@ Next we will create InfluxDBWriter which will actually responsible for putting d
 ```
 public class InfluxDBGaugeWriter implements GaugeWriter {
 
+    private static final int THRESHOLD_LIMIT = 50;
     InfluxDB influxDB;
 
     String dbName;
@@ -134,7 +135,7 @@ public class InfluxDBGaugeWriter implements GaugeWriter {
         dbName = "sampleAppMetric";
         batchPoints = BatchPoints
                 .database(dbName)
-                .tag("async", "true")
+                .tag("componentName", "SampleApp")
                 .retentionPolicy("autogen")
                 .consistency(InfluxDB.ConsistencyLevel.ALL)
                 .build();
@@ -143,20 +144,24 @@ public class InfluxDBGaugeWriter implements GaugeWriter {
     @Override
     public void set(Metric<?> metric) {
 
-        Point point = Point.measurement("FeederMetric").time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
-                .addField(metric.getName(), metric.getValue()).build();
+        Point point = Point.measurement(metric.getName()).time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
+                .addField("value", metric.getValue()).build();
 
 
         batchPoints.point(point);
-        influxDB.write(batchPoints);
+
+        if (batchPoints.getPoints().size() > THRESHOLD_LIMIT) {
+            influxDB.write(batchPoints);
+            batchPoints.getPoints().clear();
+        }
     }
 }
 ```
 
 spring boot provides MetricWriter interface or GaugeWriter for simple use cases. We have used GaugeWriter and overriden the set method.
-In the constructor we are just establishing the connection with InfluxDB and created a batchPoints, in the set method we are creating a point and adding to the batchpoints and writing to influxdb. 
+In the constructor we are just establishing the connection with InfluxDB and created a batchPoints, in the set method we are creating a point and adding to the batchpoints and writing to influxdb when the batch breaches the threshold limit. 
 
-Please note that we can do all sorts of optimization here which involves batching and buffered flushing of data. This is just for learning purpose.
+Please note that we can do all other sorts of optimization here which involves batching and buffered flushing of data. This is just for learning purpose.
 
 Now we will create the application's main class
 
@@ -182,3 +187,43 @@ public class Application {
     }
 }
 ```
+
+This is all good, now there are numerous situations where we would need to have custom metrics i.e. our own metrics information. So lets try creating a custom metric
+
+```
+@Service
+public class ScheduledMetricsExample {
+
+    private final CounterService counterService;
+
+    public ScheduledMetricsExample(CounterService counterService){
+        this.counterService = counterService;
+    }
+
+    @Scheduled(fixedRate = 60000L)
+    public void scheduledMethod() {
+        this.counterService.increment("custom.metrics.value");
+    }
+
+}
+```
+
+So we have created a service class ScheduledMetricsExample and declared a field of type CounterService which is instantiated by spring using the constructor. Spring provides 2 classes CounterService and GaugeService. The CounterService exposes increment, decrement and reset methods; the GaugeService provides a submit method. We are using a counterservice here for incrementing custom.metrics.value every 1min.
+
+
+Now lets create the application.properties file in resources which wil define the portno. for our application and the management port for our application.
+
+```
+server.port=8090
+management.port=8081
+management.security.enabled=false
+service.name=Ambuj
+```
+
+You see we have defined service.name which will be injected the HelloWorldProperties file name field. we defined server.port as 8090 which means our application will be running on port 8090 and management.port is 8081 i.e. we will be able to see application metrics on port 8081
+
+Now lets deploy your spring boot application, like any other application. Since i have the project setup in IDE, i will just run my main class. Once your application is up 
+
+Lets browse to the application url first [http://localhost:8090]
+
+Now once you can see the application lets go and check the management port url [http://localhost:8081/metrics]
