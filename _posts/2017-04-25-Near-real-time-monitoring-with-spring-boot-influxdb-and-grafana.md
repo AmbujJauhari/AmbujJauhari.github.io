@@ -61,7 +61,7 @@ More on grafana [here]
 ### Setting up influx db ###
 
 Lets first bring up influxdb on my local machine. We are using version v1.2.2
-![](../_images/influxdb.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/influxdb.JPG)
 
 Double click influxdb.exe to start the influxdb server by default it run on port 8086, but it can be configured using file influxdb.conf. Click on influx.exe to start a CLI interface. Now lets create a database first.
 
