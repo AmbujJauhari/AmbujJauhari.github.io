@@ -306,3 +306,17 @@ Click on save button on the top now
 Similarly lets add the panel for uptime in the same row, for that we will have to reduce the size of heapused panel 
 ![](../_images/reduceheapusedpanel.JPG?raw=true)
 
+Now click on left side corner a popup will open there click on add panel
+![](../_images/grafanaaddnewpanel.JPG?raw=true)
+
+Now similar to what we have done for heapused, we do it for uptime and save the dashboard. Similarly we will add a new row and inside add a new panel and display our custom metrics but  additionally we will choose bars to display this time
+
+![](../_images/grafananewrownewpanel.JPG?raw=true)
+
+![](../_images/grafanadisplaybar.JPG?raw=true)
+
+
+Now lets see how our complete dashboard looks like
+
+![](../_images/CompleteDashboard.JPG?raw=true)
+
