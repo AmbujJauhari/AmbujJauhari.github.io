@@ -65,7 +65,7 @@ Lets first bring up influxdb on my local machine. We are using version v1.2.2
 
 Double click influxdb.exe to start the influxdb server by default it run on port 8086, but it can be configured using file influxdb.conf. Click on influx.exe to start a CLI interface. Now lets create a database first.
 
-![](../_images/creating_db.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/creating_db.JPG)
 
 We have created a database SampleAppMetric and we will be using this database
 
@@ -232,11 +232,11 @@ You see we have defined service.name which will be injected the HelloWorldProper
 Now lets deploy your spring boot application, like any other application. Since i have the project setup in IDE, i will just run my main class. Once your application is up 
 
 Lets browse to the application url first [http://localhost:8090]
-![](../_images/applicationurl.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/applicationurl.JPG)
 
 
 Now once you can see the application lets go and check the management port url [http://localhost:8081/metrics]
-![](../_images/metricurl.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/metricurl.JPG)
 
 [http://localhost:8090]:http://localhost:8090
 [http://localhost:8081/metrics]:http://localhost:8081/metrics
@@ -245,12 +245,12 @@ Now once we have confirmed that our application is working and our metrics can b
 
 
 Lets first take a look at all the measurements created
-![](../_images/measurements.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/measurements.JPG)
 
 you can see that we have all the measurements and each measurement is nothing just the name of each metric
 
 Now lets view some of the measurements like uptime and heap
-![](../_images/selectquery.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/selectquery.JPG)
 
 Since there were too many records, i have limited the no. of rows to 5.
 
@@ -263,37 +263,37 @@ All this is good and fine, we have the application metrics data stored in a db b
 We are using the grafana version 4.1.2
 once you have downloaded grafana unzip it and there is a file defaults.ini and sample.ini. Never ever change the defaults.ini to customize copy the sample.ini to custom.ini and override all the defaults in custom.ini file. For example we have modified the grafana running port from 3000 to 8080
 
-![](../_images/grafanaserverport.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafanaserverport.JPG)
 
 let bring up grafan using grafan-server.exe and lets access [http://localhost:8080]
 
 [http://localhost:8080]:http://localhost:8080
-![](../_images/grafanahomepage.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafanahomepage.JPG)
 
 admin use for grafana is admin and password is admin as well, So lets login now
 
-![](../_images/grafanahomedashboard.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafanahomedashboard.JPG)
 
 Now before we can do anything, we need to setup influxdb datasource first
 
-![](../_images/grafanahomedashboarddatasource.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafanahomedashboarddatasource.JPG)
 
-![](../_images/grafanadatasource.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafanadatasource.JPG)
 
 
 Click on Add Data Source to add a new data source
 
-![](../_images/grafanaadddatasource.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafanaadddatasource.JPG)
 
 Lets fill in the details now
 
-![](../_images/grafandatasourcedetails.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafandatasourcedetails.JPG)
 
 Once that is done you can click Add and then save & Test to test the connection, it should be all success
 
 Now lets create a new dashboard
 
-![](../_images/grafananewdashboard.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafananewdashboard.JPG)
 
 
 Grafana allows you to create multiple rows, and each row can have multiple panels
@@ -306,35 +306,35 @@ So lets start with heap in panel-1, we will be choosing graph as our visualizer 
 
 Once you click on graph it will create a blank panel, we will edit this panel now.
 
-![](../_images/grafanapaneledit.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafanapaneledit.JPG)
 
  
 Let modify the panel settings by changing the datasource and naming the fields and measurements
 
-![](../_images/grafanaheapusedpanelJPG.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafanaheapusedpanelJPG.JPG)
 
 Click on save button on the top now
 
-![](../_images/SampleAppDashboard.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/SampleAppDashboard.JPG)
 
 
 Similarly lets add the panel for uptime in the same row, for that we will have to reduce the size of heapused panel 
 
-![](../_images/reduceheapusedpanel.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/reduceheapusedpanel.JPG)
 
 Now click on left side corner a popup will open there click on add panel
-![](../_images/grafanaaddnewpanel.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafanaaddnewpanel.JPG)
 
 Now similar to what we have done for heapused, we do it for uptime and save the dashboard. Similarly we will add a new row and inside add a new panel and display our custom metrics but  additionally we will choose bars to display this time
 
-![](../_images/grafananewrownewpanel.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafananewrownewpanel.JPG)
 
-![](../_images/grafanadisplaybar.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/grafanadisplaybar.JPG)
 
 
 Now lets see how our complete dashboard looks like
 
-![](../_images/CompleteDashboard.JPG?raw=true)
+![](https://raw.githubusercontent.com/AmbujJauhari/AmbujJauhari.github.io/master/_images/CompleteDashboard.JP)
 
 
 This is a just a small post on how we can integrate spring-boot, influxdb and grafana for new real time monitoring. Hope this blog has been useful. You can find the source code at [git repo]
