@@ -56,8 +56,9 @@ More on grafana [here]
 [official documents]:https://docs.influxdata.com/influxdb/v1.2/
 [here]:http://docs.grafana.org/
 
-##Project setup##
+## Project setup ##
 
+### Setting up influx db ###
 Lets first bring up influxdb on my local machine. We are using version v1.2.2
 ![](../_images/influxdb.JPG?raw=true)
 
