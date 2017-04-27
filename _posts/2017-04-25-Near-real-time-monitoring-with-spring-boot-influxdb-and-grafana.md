@@ -253,3 +253,30 @@ So significance of the above data can be interpreted as at a particular given ti
 
 All this is good and fine, we have the application metrics data stored in a db but now lets see how we can visualize the data in grafana
 
+### Setting up Grafana ###
+
+We are using the grafana version 4.1.2
+once you have downloaded grafana unzip it and there is a file defaults.ini and sample.ini. Never ever change the defaults.ini to customize copy the sample.ini to custom.ini and override all the defaults in custom.ini file. For example we have modified the grafana running port from 3000 to 8080
+
+![](../_images/grafanaserverport.JPG?raw=true)
+
+let bring up grafan using grafan-server.exe and lets access [http://localhost:8080]
+
+[http://localhost:8080]:http://localhost:8080
+![](../_images/grafanahomepage.JPG?raw=true)
+
+admin use for grafana is admin and password is admin as well, So lets login now
+![](../_images/grafanahomedashboard.JPG?raw=true)
+
+Now before we can do anything, we need to setup influxdb datasource first
+![](../_images/grafanahomedashboarddatasource.JPG?raw=true)
+
+![](../_images/grafanadatasource.JPG?raw=true)
+
+Click on Add Data Source to add a new data source
+![](../_images/grafanaadddatasource.JPG?raw=true)
+
+Lets fill in the details now
+![](../_images/grafandatasourcedetails.JPG?raw=true)
+
+Once that is done you can click Add and then save & Test to test the connection, it should be all success
